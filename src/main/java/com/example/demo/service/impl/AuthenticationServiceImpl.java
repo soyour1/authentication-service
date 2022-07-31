@@ -41,8 +41,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		authenticate(dto.getEmail(), dto.getPassword());
 		final UserDetails userDetails = detailsServiceImpl.loadUserByUsername(dto.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-//		Message message = new Message(dto.getEmail(), request.getRemoteAddr(), "Login");
-//		kafkaTemplate.send("log", message.toString());
+		Message message = new Message(dto.getEmail(), request.getRemoteAddr(), "Login");
+		kafkaTemplate.send("log", message.toString());
 		return new LoginResponseDto(token);
 	}
 	
